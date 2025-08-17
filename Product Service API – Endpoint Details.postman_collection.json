@@ -1,0 +1,690 @@
+{
+	"info": {
+		"_postman_id": "f9700d55-6567-4d81-8a68-282113e76535",
+		"name": "Product Service API – Endpoint Details",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31649132",
+		"_collection_link": "https://science-operator-46267776-2184332.postman.co/workspace/name~99e4efc4-8679-4277-80f1-6a341e9044a9/collection/31649132-f9700d55-6567-4d81-8a68-282113e76535?action=share&source=collection_link&creator=31649132"
+	},
+	"item": [
+		{
+			"name": "Authentication and Authorization",
+			"item": [
+				{
+					"name": "authCode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const expectedErrors = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (expectedErrors[code]) {\r",
+									"        pm.expect(status).to.eql(expectedErrors[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Extract and set auth_code to collection variable\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"auth_code\");\r",
+									"\r",
+									"    pm.collectionVariables.set(\"auth_code\", jsonData.auth_code);\r",
+									"\r",
+									"    console.log(\"Collection variable 'auth_code' set to:\", jsonData.auth_code);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "user1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accessToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Extract and set access_token to collection variable\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"access_token\");\r",
+									"\r",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);\r",
+									"\r",
+									"    console.log(\"Collection variable 'access_token' set to:\", jsonData.access_token);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const expectedErrors = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (expectedErrors[code]) {\r",
+									"        pm.expect(status).to.eql(expectedErrors[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "{{auth_code}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "auth_code",
+									"value": "{{auth_code}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validate Requests to Endpoints",
+			"item": [
+				{
+					"name": "Add Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const expectedErrors = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (expectedErrors[code]) {\r",
+									"        pm.expect(status).to.eql(expectedErrors[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains product with ID 4 and correct values\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    const product = jsonData.find(p => p.id === \"4\");\r",
+									"\r",
+									"    pm.expect(product, \"Product with ID 4 should exist\").to.not.be.undefined;\r",
+									"    pm.expect(product.name).to.eql(\"TV\");\r",
+									"    pm.expect(product.amount).to.eql(\"45000\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"name\": \"TV\",\r\n    \"amount\": 45000\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/addProduct",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View All Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const expectedErrors = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (expectedErrors[code]) {\r",
+									"        pm.expect(status).to.eql(expectedErrors[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is a JSON array\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/getAllProducts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"getAllProducts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Product by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const expectedErrors = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (expectedErrors[code]) {\r",
+									"        pm.expect(status).to.eql(expectedErrors[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check product exists for given ID\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    const expectedId = data.id+\"\";  // Use `data.id`, not collection variable\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"id\",expectedId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/getProductbyId/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"getProductbyId",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Product by Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const expectedErrors = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (expectedErrors[code]) {\r",
+									"        pm.expect(status).to.eql(expectedErrors[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check product exists for given name\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    let expectedName = data.name;\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"name\", expectedName);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://webapps.tekstac.com/OAuthRestApi/webapi/viewProductByName?name={{name}}",
+							"protocol": "https",
+							"host": [
+								"webapps",
+								"tekstac",
+								"com"
+							],
+							"path": [
+								"OAuthRestApi",
+								"webapi",
+								"viewProductByName"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validates expected negative status codes\", function () {\r",
+									"    const negativeCodes = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    if (negativeCodes[pm.response.code]) {\r",
+									"        pm.expect(pm.response.status).to.eql(negativeCodes[pm.response.code]);\r",
+									"        console.warn(`Expected failure handled: ${pm.response.code} - ${pm.response.status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Product with expected ID has correct amount\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    const expectedId = pm.collectionVariables.get(\"id\");\r",
+									"\r",
+									"    const product = jsonData.find(p => p.id === expectedId);\r",
+									"\r",
+									"    pm.expect(product, \"Product with given ID should exist\").to.not.be.undefined;\r",
+									"    pm.expect(product.amount).to.eql(\"4500\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Shirt\",\r\n    \"amount\":4500,\r\n    \"id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://webapps.tekstac.com/OAuthRestApi/webapi/updateProduct/{{id}}",
+							"protocol": "https",
+							"host": [
+								"webapps",
+								"tekstac",
+								"com"
+							],
+							"path": [
+								"OAuthRestApi",
+								"webapi",
+								"updateProduct",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Prodcut by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Handles expected negative status codes\", function () {\r",
+									"    const negativeCodes = {\r",
+									"        400: \"Bad Request\",\r",
+									"        403: \"Forbidden\",\r",
+									"        404: \"Not Found\",\r",
+									"        415: \"Unsupported Media Type\",\r",
+									"        422: \"Unprocessable Entity\"\r",
+									"    };\r",
+									"\r",
+									"    const code = pm.response.code;\r",
+									"    const status = pm.response.status;\r",
+									"\r",
+									"    if (negativeCodes[code]) {\r",
+									"        pm.expect(status).to.eql(negativeCodes[code]);\r",
+									"        console.warn(`Handled expected error: ${code} - ${status}`);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Product with given ID does not exist\", function () {\r",
+									"    const jsonData = pm.response.json(); \r",
+									"    const idToCheck = data.id;\r",
+									"    const product = jsonData.find(p => p.id === idToCheck);\r",
+									"\r",
+									"    pm.expect(product).to.be.undefined;\r",
+									"});\r",
+									"pm.test(\"Response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://webapps.tekstac.com/OAuthRestApi/webapi/delProduct/{{id}}",
+							"protocol": "https",
+							"host": [
+								"webapps",
+								"tekstac",
+								"com"
+							],
+							"path": [
+								"OAuthRestApi",
+								"webapi",
+								"delProduct",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "auth_code",
+			"value": ""
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "name",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

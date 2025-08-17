@@ -1,0 +1,407 @@
+{
+	"id": "6886d80f-d820-48d8-a24f-185a58296ca9",
+	"name": "Product Service API – Endpoint Details",
+	"timestamp": "2025-08-06T13:34:41.619Z",
+	"collection_id": "31649132-f9700d55-6567-4d81-8a68-282113e76535",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 88,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-08-06T13:34:37.739Z",
+	"totalFail": 12,
+	"results": [
+		{
+			"id": "5a93a813-c088-46fc-8b60-4195fb454b14",
+			"name": "Add Product",
+			"url": "https://webapps.tekstac.com/OAuthRestApi/webapi/addProduct",
+			"time": 50,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200 OK": true,
+				"Handles expected negative status codes": true,
+				"Response contains product with ID 4 and correct values": true,
+				"Response time is less than 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200 OK": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Handles expected negative status codes": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response contains product with ID 4 and correct values": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response time is less than 2000ms": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				194,
+				49,
+				49,
+				44,
+				50
+			],
+			"allTests": [
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response contains product with ID 4 and correct values": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response contains product with ID 4 and correct values": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response contains product with ID 4 and correct values": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response contains product with ID 4 and correct values": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response contains product with ID 4 and correct values": true,
+					"Response time is less than 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "334415fe-fc45-436c-b959-4ea710033868",
+			"name": "View All Products",
+			"url": "https://webapps.tekstac.com/OAuthRestApi/webapi/getAllProducts",
+			"time": 44,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200 OK": true,
+				"Handles expected negative status codes": true,
+				"Response is a JSON array": true,
+				"Response time is less than 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200 OK": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Handles expected negative status codes": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response is a JSON array": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response time is less than 2000ms": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				39,
+				50,
+				48,
+				49,
+				44
+			],
+			"allTests": [
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response is a JSON array": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response is a JSON array": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response is a JSON array": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response is a JSON array": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Response is a JSON array": true,
+					"Response time is less than 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "09659b94-b22b-44c4-a962-96c725779a80",
+			"name": "View Product by Id",
+			"url": "https://webapps.tekstac.com/OAuthRestApi/webapi/getProductbyId/5",
+			"time": 49,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 200 OK": false,
+				"Handles expected negative status codes": true,
+				"Check product exists for given ID": false,
+				"Response time is less than 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200 OK": {
+					"pass": 3,
+					"fail": 2
+				},
+				"Handles expected negative status codes": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Check product exists for given ID": {
+					"pass": 3,
+					"fail": 2
+				},
+				"Response time is less than 2000ms": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				53,
+				48,
+				48,
+				47,
+				49
+			],
+			"allTests": [
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Check product exists for given ID": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Check product exists for given ID": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Check product exists for given ID": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": false,
+					"Handles expected negative status codes": true,
+					"Check product exists for given ID": false,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": false,
+					"Handles expected negative status codes": true,
+					"Check product exists for given ID": false,
+					"Response time is less than 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "6cc168e2-a525-443f-a329-e13944554b1c",
+			"name": "View Product by Name",
+			"url": "https://webapps.tekstac.com/OAuthRestApi/webapi/viewProductByName?name=Headphones",
+			"time": 47,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 200 OK": false,
+				"Handles expected negative status codes": true,
+				"Check product exists for given name": false,
+				"Response time is less than 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200 OK": {
+					"pass": 3,
+					"fail": 2
+				},
+				"Handles expected negative status codes": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Check product exists for given name": {
+					"pass": 3,
+					"fail": 2
+				},
+				"Response time is less than 2000ms": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				61,
+				46,
+				46,
+				46,
+				47
+			],
+			"allTests": [
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Check product exists for given name": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Check product exists for given name": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Check product exists for given name": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": false,
+					"Handles expected negative status codes": true,
+					"Check product exists for given name": false,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": false,
+					"Handles expected negative status codes": true,
+					"Check product exists for given name": false,
+					"Response time is less than 2000ms": true
+				}
+			]
+		},
+		{
+			"id": "fb89e36b-aefc-4def-b011-9f2f24b58c08",
+			"name": "Delete Prodcut by Id",
+			"url": "https://webapps.tekstac.com/OAuthRestApi/webapi/delProduct/5",
+			"time": 47,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is 200 OK": false,
+				"Handles expected negative status codes": true,
+				"Product with given ID does not exist": false,
+				"Response time is less than 2000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200 OK": {
+					"pass": 3,
+					"fail": 2
+				},
+				"Handles expected negative status codes": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Product with given ID does not exist": {
+					"pass": 3,
+					"fail": 2
+				},
+				"Response time is less than 2000ms": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				47,
+				50,
+				45,
+				44,
+				47
+			],
+			"allTests": [
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Product with given ID does not exist": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Product with given ID does not exist": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": true,
+					"Handles expected negative status codes": true,
+					"Product with given ID does not exist": true,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": false,
+					"Handles expected negative status codes": true,
+					"Product with given ID does not exist": false,
+					"Response time is less than 2000ms": true
+				},
+				{
+					"Status code is 200 OK": false,
+					"Handles expected negative status codes": true,
+					"Product with given ID does not exist": false,
+					"Response time is less than 2000ms": true
+				}
+			]
+		}
+	],
+	"count": 5,
+	"totalTime": 1340,
+	"collection": {
+		"requests": [
+			{
+				"id": "5a93a813-c088-46fc-8b60-4195fb454b14",
+				"method": "POST"
+			},
+			{
+				"id": "334415fe-fc45-436c-b959-4ea710033868",
+				"method": "GET"
+			},
+			{
+				"id": "09659b94-b22b-44c4-a962-96c725779a80",
+				"method": "GET"
+			},
+			{
+				"id": "6cc168e2-a525-443f-a329-e13944554b1c",
+				"method": "GET"
+			},
+			{
+				"id": "fb89e36b-aefc-4def-b011-9f2f24b58c08",
+				"method": "DELETE"
+			}
+		]
+	}
+}
